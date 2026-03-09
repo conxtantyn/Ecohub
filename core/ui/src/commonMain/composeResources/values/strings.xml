@@ -1,0 +1,9 @@
+<resources>
+    <string name="menu">Menu</string>
+    <string name="back">Back</string>
+
+    <string name="password_uppercase_validation">At least 1 upper case letter</string>
+    <string name="password_number_validation">At least 1 number</string>
+    <string name="password_length_validation">At least 8 characters</string>
+    <string name="password_confirmation_validation">Both passwords must be identical</string>
+</resources>
