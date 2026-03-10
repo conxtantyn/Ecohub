@@ -26,13 +26,13 @@ fun ControllerDialog(
                 Text("The technician has updated the temperature to ${conflict.current.temperature}°C. You tried to set it to ${conflict.target.temperature}°C. What would you like to do?")
             },
             confirmButton = {
-                Button(onClick = { handleResolve(conflict.target) }) {
+                Button(onClick = { handleResolve(conflict.current) }) {
                     Text("Overwrite")
                 }
             },
             dismissButton = {
                 TextButton(onClick = {
-                    handleResolve(conflict.current)
+                    handleResolve(conflict.target)
                 }) {
                     Text("Keep Theirs")
                 }
