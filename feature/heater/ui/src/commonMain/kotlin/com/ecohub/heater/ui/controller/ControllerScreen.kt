@@ -57,7 +57,7 @@ class ControllerScreen(
             snapshotFlow { current.value }.collectLatest {
                 val notify = it != null
                         && it.channel == Channel.REMOTE
-                        && mode.value == Mode.AUTOMATIC
+                        && mode.value == Mode.MANUAL
                 if (notify && initialized.value) {
                     event(ControllerEvent.Event.Toast(
                         "Updated by technician to ${(state as ControllerViewModel.State.Success).current.temperature}°C."
