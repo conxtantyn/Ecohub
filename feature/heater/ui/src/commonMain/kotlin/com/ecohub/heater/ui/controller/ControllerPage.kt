@@ -1,18 +1,9 @@
 package com.ecohub.heater.ui.controller
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Switch
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
@@ -22,6 +13,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.ecohub.heater.domain.model.Mode
 import com.ecohub.ui.theme.DesignTheme
+import ecohub.feature.heater.ui.generated.resources.Res
+import ecohub.feature.heater.ui.generated.resources.mode
+import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
@@ -29,56 +23,38 @@ fun ControllerPage(
     mode: State<Mode>,
     onDecrement: () -> Unit,
     onIncrement: () -> Unit,
+    modifier: Modifier = Modifier,
     onToggleMode: (Boolean) -> Unit,
 ) {
     Column(
-        modifier = Modifier.fillMaxSize(),
+        modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        Text(
-            text = "Temperature Control",
-            style = MaterialTheme.typography.headlineMedium
+        ControllerSwitch(
+            text = stringResource(Res.string.mode),
+            mode = mode,
+            onToggleMode = onToggleMode
         )
-        Spacer(modifier = Modifier.size(32.dp))
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Center,
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            IconButton(onClick = onDecrement) {
-                Text("-", style = MaterialTheme.typography.headlineLarge)
-            }
-            Box(
-                modifier = Modifier.weight(1f)
-                    .padding(horizontal = 16.dp)
-            )
-            IconButton(onClick = onIncrement) {
-                Text("+", style = MaterialTheme.typography.headlineLarge)
-            }
-        }
-        Spacer(modifier = Modifier.size(48.dp))
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            Text("Collaborative Mode")
-            Switch(
-                checked = mode.value == Mode.AUTOMATIC,
-                onCheckedChange = onToggleMode
-            )
-        }
+        ControllerButton(
+            onDecrease = onDecrement,
+            onIncrement = onIncrement,
+            modifier = Modifier.padding(top = 48.dp),
+        )
     }
 }
 
 @Preview
 @Composable
-fun PreviewControllerPage() {
+fun PreviewControllerPage(
+    modifier: Modifier = Modifier.fillMaxWidth()
+        .padding(24.dp)
+) {
     DesignTheme {
         val mode = remember { mutableStateOf(Mode.MANUAL) }
         ControllerPage(
             mode = mode,
+            modifier = modifier,
             onDecrement = {},
             onIncrement = {}
         ) {}

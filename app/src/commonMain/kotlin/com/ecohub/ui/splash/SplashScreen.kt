@@ -2,6 +2,7 @@ package com.ecohub.ui.splash
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.snapshotFlow
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import cafe.adriel.voyager.core.model.rememberScreenModel
@@ -17,7 +18,8 @@ class SplashScreen(val scope: ScopeID) : Screen {
     @Composable
     override fun Content() {
         val event = LocalSplashEvent.current
-        val component = factory(scope).builder(Splash.Builder::class).build()
+        val factory = factory(scope)
+        val component = remember { factory.builder(Splash.Builder::class).build() }
         val viewModel = rememberScreenModel { component.get<SplashViewModel>() }
         val state = viewModel.state.collectAsStateWithLifecycle()
         val app = stringResource(Res.string.app_name)

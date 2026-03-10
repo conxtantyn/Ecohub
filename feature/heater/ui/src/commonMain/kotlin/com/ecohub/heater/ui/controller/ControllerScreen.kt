@@ -11,6 +11,7 @@ import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.snapshotFlow
 import cafe.adriel.voyager.core.model.rememberScreenModel
 import cafe.adriel.voyager.core.screen.Screen
@@ -28,7 +29,7 @@ class ControllerScreen(
     @Composable
     override fun Content() {
         val factory = factory(scope)
-        val component = remember(factory, rate) { factory
+        val component = remember { factory
             .builder(Controller.Builder::class).build(rate) }
         val viewModel = rememberScreenModel { component.get<ControllerViewModel>() }
         val event = LocalControllerEvent.current
@@ -36,7 +37,7 @@ class ControllerScreen(
         val status by viewModel.status.collectAsState()
         val mode = viewModel.mode.collectAsState()
         val isConflict = remember { derivedStateOf { state is ControllerViewModel.State.Conflict } }
-        val initialized = remember { mutableStateOf(false) }
+        val initialized = rememberSaveable { mutableStateOf(false) }
         val current = remember { derivedStateOf {
             (state as? ControllerViewModel.State.Success?)?.current
         } }

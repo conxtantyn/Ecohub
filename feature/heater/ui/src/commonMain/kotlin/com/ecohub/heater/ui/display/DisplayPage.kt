@@ -1,5 +1,6 @@
 package com.ecohub.heater.ui.display
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -11,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.ecohub.ui.theme.DesignTheme
@@ -20,40 +22,41 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 fun DisplayPage(
     title: String,
     status: String,
-    color: Color
+    color: Color,
+    modifier: Modifier = Modifier
 ) {
     Column(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier.then(modifier),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        Text(
-            text = "Current Status",
-            style = MaterialTheme.typography.headlineMedium
-        )
         Spacer(modifier = Modifier.size(32.dp))
         Text(
             text = title,
             style = MaterialTheme.typography.displayLarge,
             textAlign = TextAlign.Center
         )
-        Spacer(modifier = Modifier.size(16.dp))
         Text(
-            text = status,
-            style = MaterialTheme.typography.bodyLarge,
-            color = color
+            text = status.uppercase(),
+            style = MaterialTheme.typography.bodySmall,
+            color = color,
+            fontWeight = FontWeight.SemiBold
         )
     }
 }
 
 @Preview
 @Composable
-fun PreviewDisplayPage() {
+fun PreviewDisplayPage(
+    modifier: Modifier = Modifier.fillMaxSize()
+        .background(MaterialTheme.colorScheme.background)
+) {
     DesignTheme {
         DisplayPage(
             title = "25°C",
-            status = "Active",
-            color = MaterialTheme.colorScheme.onBackground
+            status = "Current temperature",
+            color = MaterialTheme.colorScheme.outline,
+            modifier = modifier
         )
     }
 }

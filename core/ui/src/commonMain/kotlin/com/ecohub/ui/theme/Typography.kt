@@ -11,12 +11,23 @@ fun typography(): Typography {
     val fontFamily = bodyFontFamily()
     val headerFontFamily = headerFontFamily()
     return Typography(
+        displayLarge = TextStyle(
+            fontFamily = headerFontFamily,
+            fontWeight = FontWeight.SemiBold,
+            fontSize = 57.sp,
+            lineHeight = 64.sp,
+        ),
         bodyMedium = TextStyle(
             fontFamily = fontFamily,
             fontWeight = FontWeight.Medium,
             fontSize = 14.sp,
             lineHeight = 22.sp,
-            letterSpacing = 0.25.sp
+        ),
+        bodySmall = TextStyle(
+            fontFamily = fontFamily,
+            fontWeight = FontWeight.Medium,
+            fontSize = 11.sp,
+            lineHeight = 15.sp,
         ),
     )
 }

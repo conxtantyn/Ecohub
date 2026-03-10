@@ -27,7 +27,7 @@ class DashboardScreen(
         val context = rememberCoroutineScope()
         val snackbar = remember { SnackbarHostState() }
         val factory = factory(scope)
-        val component = remember(factory, uuid) { factory
+        val component = remember { factory
             .builder(Dashboard.Builder::class).build(uuid) }
         Scaffold(snackbarHost = { SnackbarHost(snackbar) }) {
             val event = remember { object : ControllerEvent {

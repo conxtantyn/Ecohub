@@ -9,6 +9,7 @@ import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import cafe.adriel.voyager.core.model.rememberScreenModel
 import cafe.adriel.voyager.core.screen.Screen
+import com.ecohub.heater.ui.extension.round
 import com.ecohub.ui.extension.factory
 import org.koin.core.scope.ScopeID
 
@@ -16,7 +17,7 @@ class DisplayScreen(val scope: ScopeID) : Screen {
     @Composable
     override fun Content() {
         val factory = factory(scope)
-        val component = remember(factory) { factory
+        val component = remember { factory
             .builder(Display.Builder::class).build() }
         val viewModel = rememberScreenModel { component.get<DisplayViewModel>() }
         val state by viewModel.state.collectAsState()
@@ -24,10 +25,12 @@ class DisplayScreen(val scope: ScopeID) : Screen {
             when(state) {
                 is DisplayViewModel.State.Default -> "--°C" to "Waiting..."
                 is DisplayViewModel.State.Success -> {
-                    "${(state as DisplayViewModel.State.Success).metrics.temperature}°C" to "Active"
+                    "${(state as DisplayViewModel.State.Success).metrics.temperature
+                        .round(2)}°C" to "Current temperature"
                 }
                 is DisplayViewModel.State.Conflict -> {
-                    "${(state as DisplayViewModel.State.Conflict).target.temperature}°C" to "Conflict Detected"
+                    "${(state as DisplayViewModel.State.Conflict).target.temperature
+                        .round(2)}°C" to "Conflict Detected"
                 }
             }
         } }
@@ -37,7 +40,7 @@ class DisplayScreen(val scope: ScopeID) : Screen {
             color = if (state is DisplayViewModel.State.Conflict) {
                 MaterialTheme.colorScheme.error
             } else {
-                MaterialTheme.colorScheme.onBackground
+                MaterialTheme.colorScheme.outline
             }
         )
         LaunchedEffect(Unit) {
