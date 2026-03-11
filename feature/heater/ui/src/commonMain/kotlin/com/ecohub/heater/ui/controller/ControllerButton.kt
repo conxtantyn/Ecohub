@@ -20,6 +20,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.unit.dp
+import com.ecohub.heater.ui.shape.LeftCaret
+import com.ecohub.heater.ui.shape.RightCaret
 import com.ecohub.ui.theme.DesignTheme
 import ecohub.feature.heater.ui.generated.resources.Res
 import ecohub.feature.heater.ui.generated.resources.ic_arrow
@@ -56,23 +58,27 @@ fun ControllerButton(
                     contentAlignment = Alignment.Center,
                     modifier = Modifier.fillMaxHeight()
                         .weight(1f)
+                        .clip(LeftCaret())
                         .clickable(onClick = onDecrease)
                 ) {
                     Icon(
                         painter = painterResource(Res.drawable.ic_arrow),
                         contentDescription = "Decrease",
                         modifier = Modifier.rotate(180f)
+                            .padding(start = 20.dp)
                     )
                 }
                 Box(
                     contentAlignment = Alignment.Center,
                     modifier = Modifier.fillMaxHeight()
                         .weight(1f)
+                        .clip(RightCaret())
                         .clickable(onClick = onIncrement)
                 ) {
                     Icon(
                         painter = painterResource(Res.drawable.ic_arrow),
                         contentDescription = "Increase",
+                        modifier = Modifier.padding(start = 20.dp)
                     )
                 }
             }
